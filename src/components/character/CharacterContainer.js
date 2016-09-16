@@ -6,6 +6,7 @@ const mapStateToProps = (state, ownProps) => ({
   x: state.character.position.x,
   y: state.character.position.y,
   scale: state.stage.scale,
+  stageX: state.stage.x,
   ...ownProps
 });
 

@@ -81,20 +81,20 @@ class Character extends Component {
   }
 
   getWrapperStyles() {
-    const { x, y, scale/*, stageX*/ } = this.props;
+    const { x, y, scale, stageX } = this.props;
     let dimension = 0;
     let angle = 0;
     if (this.body) {
       dimension = Math.sqrt(this.body.area);
       angle = this.body.angle * (180/Math.PI);
     }
-    // const targetX = x + stageX;
+    const targetX = x + stageX;
 
     return {
       height: `${dimension * scale}px`,
       position: 'absolute',
-      transform: `translate(${x * scale}px, ${y * scale}px) rotate(${angle}deg)`,
-      transformOrigin: 'center',
+      transform: `translate(${(targetX - dimension / 2) * scale}px, ${(y - dimension / 2) * scale}px) rotate(${angle}deg)`,
+      transformOrigin: 'top left',
       width: `${dimension * scale}px`,
     };
   }
@@ -102,7 +102,7 @@ class Character extends Component {
   render() {
     return (
       <div style={this.getWrapperStyles()}>
-        <Body args={[0,0,50,50]} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
+        <Body args={[25,0,50,50]} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
           <div style={{ background: 'red', height: '100%', width: '100%' }} />
         </Body>
       </div>

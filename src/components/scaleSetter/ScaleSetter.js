@@ -1,6 +1,6 @@
 import { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { setScale } from '../../actions/scale';
+import { setScale } from '../../actions/stage';
 
 class ScaleSetterInner extends Component {
   static propTypes = {
