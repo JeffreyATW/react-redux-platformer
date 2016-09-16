@@ -2,10 +2,11 @@ import { connect } from 'react-redux';
 import { setCharacterPosition } from '../../actions/character';
 import Character from './Character';
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state, ownProps) => ({
   x: state.character.position.x,
   y: state.character.position.y,
   scale: state.stage.scale,
+  ...ownProps
 });
 
 const mapDispatchToProps = dispatch => ({
