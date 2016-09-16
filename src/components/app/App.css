@@ -1,0 +1,11 @@
+.Character {
+  background: blue;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
