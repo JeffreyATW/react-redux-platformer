@@ -7,4 +7,9 @@ export default new Map([
       $set: action.scale,
     },
   })],
+  [actionTypes.SET_STAGE_X, (state, action) => update(state, {
+    x: {
+      $set: action.x,
+    },
+  })],
 ]);

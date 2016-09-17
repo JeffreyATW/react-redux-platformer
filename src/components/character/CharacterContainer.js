@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { setCharacterPosition } from '../../actions/character';
+import { setStageX } from '../../actions/stage';
 import Character from './Character';
 
 const mapStateToProps = (state, ownProps) => ({
@@ -11,7 +12,8 @@ const mapStateToProps = (state, ownProps) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  setCharacterPosition: position => dispatch(setCharacterPosition(position))
+  setCharacterPosition: position => dispatch(setCharacterPosition(position)),
+  setStageX: x => dispatch(setStageX(x)),
 });
 
 export default connect(

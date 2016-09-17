@@ -9,8 +9,11 @@ class Character extends Component {
 
   static propTypes = {
     setCharacterPosition: PropTypes.func.isRequired,
+    setStageX: PropTypes.func.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
+    scale: PropTypes.number.isRequired,
+    stageX: PropTypes.number.isRequired,
   }
 
   jumping = true;
@@ -45,16 +48,30 @@ class Character extends Component {
     this.jumping = true;
   }
 
-  checkKeys() {
-    const { keys } = this.props;
+  checkKeys(shouldMoveStageLeft, shouldMoveStageRight) {
+    const { keys, setStageX, stageX } = this.props;
+
+    if (keys.isDown(keys.DOWN)) {
+      Matter.Body.set(this.body, 'friction', 0);
+    } else {
+      Matter.Body.set(this.body, 'friction', 0.001);
+    }
 
     const right = keys.isDown(keys.RIGHT);
     const left = keys.isDown(keys.LEFT);
 
     if (right && !left) {
       this.move(2);
+
+      if (shouldMoveStageRight) {
+        setStageX(stageX - 2);
+      }
     }
     if (left && !right) {
+      if (shouldMoveStageLeft) {
+        setStageX(stageX + 2);
+      }
+  
       this.move(-2);
     }
     
@@ -68,16 +85,24 @@ class Character extends Component {
   }
 
   update() {
-    this.props.setCharacterPosition(this.body.position);
+    const { stageX } = this.props;
+    if (this.body) {
+      const midPoint = Math.abs(this.props.stageX) + 256;
 
-    const velY = parseFloat(this.body.velocity.y.toFixed(5));
-    if (velY === 0 && this.jumping) {
-      this.jumping = false;
-      this.didDoubleJump = false;
-      this.canDoubleJump = false;
+      const shouldMoveStageLeft = this.body.position.x < midPoint && stageX < 0;
+      const shouldMoveStageRight = this.body.position.x > midPoint && stageX > -1024;
+
+      this.props.setCharacterPosition(this.body.position);
+
+      const velY = parseFloat(this.body.velocity.y.toFixed(5));
+      if (velY === 0 && this.jumping) {
+        this.jumping = false;
+        this.didDoubleJump = false;
+        this.canDoubleJump = false;
+      }
+
+      this.checkKeys(shouldMoveStageLeft, shouldMoveStageRight);
     }
-
-    this.checkKeys();
   }
 
   getWrapperStyles() {
@@ -102,7 +127,7 @@ class Character extends Component {
   render() {
     return (
       <div style={this.getWrapperStyles()}>
-        <Body args={[25,0,50,50]} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
+        <Body args={[25,-25,50,50]} friction={.001} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
           <div style={{ background: 'red', height: '100%', width: '100%' }} />
         </Body>
       </div>

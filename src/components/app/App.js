@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
-import { Loop, Stage, World, TileMap, KeyListener } from 'react-game-kit';
+import { Loop, World, TileMap, KeyListener } from 'react-game-kit';
 import store from '../../store';
+import StageContainer from '../stage/StageContainer';
 import ScaleSetterContainer from '../scaleSetter/ScaleSetterContainer';
 import FloorContainer from '../floor/FloorContainer';
 import CharacterContainer from '../character/CharacterContainer';
@@ -20,6 +21,7 @@ class App extends Component {
       this.keyListener.RIGHT,
       this.keyListener.UP,
       this.keyListener.SPACE,
+      this.keyListener.DOWN,
       65,
     ]);
   }
@@ -32,7 +34,7 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Loop>
-          <Stage height={512} width={512}>
+          <StageContainer>
             <ScaleSetterContainer>
               <World>
                 <FloorContainer />
@@ -40,7 +42,7 @@ class App extends Component {
                 <TileMap layers={[[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]]} tileSize={128} columns={4} rows={4} scale={1} />
               </World>
             </ScaleSetterContainer>
-          </Stage>
+          </StageContainer>
         </Loop>
       </Provider>
     );
