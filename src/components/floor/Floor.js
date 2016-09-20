@@ -42,7 +42,7 @@ class Floor extends Component {
 
     return (
       <div style={this.state.wrapperStyles}>
-        <Body args={[x, y, width, height]} angle={angle} isStatic ref={b => { this.body = b === null ? undefined : b.body; }}>
+        <Body args={[x, y, width, height]} angle={(angle * Math.PI) / 180} isStatic ref={b => { this.body = b === null ? undefined : b.body; }}>
           <div style={{ background: 'repeating-linear-gradient(to right, blue 0px, green 50px)', height: '100%', width: '100%' }} />
         </Body>
       </div>
