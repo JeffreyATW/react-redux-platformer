@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import Floor from './Floor';
 
 const mapStateToProps = (state, ownProps) => {
-  let { x, y, width, height } = ownProps;
+  let { x, y, width, height, angle } = ownProps;
   const stageHeight = state.stage.height;
   const stageWidth = state.stage.width;
 
@@ -19,7 +19,11 @@ const mapStateToProps = (state, ownProps) => {
   }
 
   if (y === undefined) {
-    y = stageHeight - height;
+    y = stageHeight - height / 2;
+  }
+
+  if (angle === undefined) {
+    angle = 0;
   }
 
   return {
@@ -27,6 +31,7 @@ const mapStateToProps = (state, ownProps) => {
     y,
     width,
     height,
+    angle,
   };
 }
 
