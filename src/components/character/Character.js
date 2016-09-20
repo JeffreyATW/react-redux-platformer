@@ -9,11 +9,8 @@ class Character extends Component {
 
   static propTypes = {
     setCharacterPosition: PropTypes.func.isRequired,
-    setStageX: PropTypes.func.isRequired,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
-    scale: PropTypes.number.isRequired,
-    stageX: PropTypes.number.isRequired,
   }
 
   jumping = true;
@@ -49,7 +46,7 @@ class Character extends Component {
   }
 
   checkKeys(shouldMoveStageLeft, shouldMoveStageRight) {
-    const { keys, setStageX, stageX } = this.props;
+    const { keys } = this.props;
 
     if (keys.isDown(keys.DOWN)) {
       Matter.Body.set(this.body, 'friction', 0);
@@ -62,16 +59,8 @@ class Character extends Component {
 
     if (right && !left) {
       this.move(2);
-
-      if (shouldMoveStageRight) {
-        setStageX(stageX - 2);
-      }
     }
-    if (left && !right) {
-      if (shouldMoveStageLeft) {
-        setStageX(stageX + 2);
-      }
-  
+    if (left && !right) {  
       this.move(-2);
     }
     
@@ -85,14 +74,12 @@ class Character extends Component {
   }
 
   update() {
-    const { stageX } = this.props;
+    const { x, y } = this.props;
     if (this.body) {
-      const midPoint = Math.abs(this.props.stageX) + 256;
 
-      const shouldMoveStageLeft = this.body.position.x < midPoint && stageX < 0;
-      const shouldMoveStageRight = this.body.position.x > midPoint && stageX > -1024;
-
-      this.props.setCharacterPosition(this.body.position);
+      if (this.body.position.x !== x || this.body.position.y !== y) {
+        this.props.setCharacterPosition(this.body.position);
+      }
 
       const velY = parseFloat(this.body.velocity.y.toFixed(5));
       if (velY === 0 && this.jumping) {
@@ -101,33 +88,32 @@ class Character extends Component {
         this.canDoubleJump = false;
       }
 
-      this.checkKeys(shouldMoveStageLeft, shouldMoveStageRight);
+      this.checkKeys();
     }
   }
 
   getWrapperStyles() {
-    const { x, y, scale, stageX } = this.props;
+    const { x, y } = this.props;
     let dimension = 0;
     let angle = 0;
     if (this.body) {
       dimension = Math.sqrt(this.body.area);
       angle = this.body.angle * (180/Math.PI);
     }
-    const targetX = x + stageX;
 
     return {
-      height: `${dimension * scale}px`,
+      height: `${dimension}px`,
       position: 'absolute',
-      transform: `translate(${(targetX - dimension / 2) * scale}px, ${(y - dimension / 2) * scale}px) rotate(${angle}deg)`,
+      transform: `translate(${x - dimension / 2}px, ${y - dimension / 2}px) rotate(${angle}deg)`,
       transformOrigin: 'top left',
-      width: `${dimension * scale}px`,
+      width: `${dimension}px`,
     };
   }
 
   render() {
     return (
       <div style={this.getWrapperStyles()}>
-        <Body args={[25,-25,50,50]} friction={.001} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
+        <Body args={[this.props.x,this.props.y,50,50]} friction={.001} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
           <div style={{ background: 'red', height: '100%', width: '100%' }} />
         </Body>
       </div>

@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
-import Floor from './Floor';
+import Level from './Level';
 
 const mapStateToProps = state => ({
-  stageHeight: state.stage.height,
-  stageWidth: state.stage.width,
+  scale: state.stage.scale,
+  stageX: state.stage.x,
 });
 
 export default connect(
   mapStateToProps
-)(Floor);
+)(Level);
