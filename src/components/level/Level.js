@@ -5,6 +5,7 @@ import CharacterContainer from '../character/CharacterContainer';
 
 class Level extends Component {
   static propTypes = {
+    stageHeight: PropTypes.number.isRequired,
     stageX: PropTypes.number.isRequired
   }
 
@@ -33,13 +34,18 @@ class Level extends Component {
 
     return {
       transform: `translateX(${-stageX * scale}px) scale(${scale})`,
+      transformOrigin: 'top left',
     }
   }
 
   render() {
+    const { stageHeight } = this.props;
+
     return (
       <div style={this.getWrapperStyles()}>
         <FloorContainer />
+        <FloorContainer width={50} height={stageHeight} y={stageHeight / 2} x={-25} />
+        <FloorContainer width={200} y={300} x={100} />
         <CharacterContainer keys={this.keyListener} />
         <TileMap layers={[[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]]} tileSize={128} columns={4} rows={4} scale={1} />
       </div>

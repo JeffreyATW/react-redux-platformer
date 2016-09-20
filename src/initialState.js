@@ -1,7 +1,11 @@
 export default {
   character: {
+    dimensions: {
+      height: 50,
+      width: 50,
+    },
     position: {
-      x: 0,
+      x: 25,
       y: 0,
     }
   },

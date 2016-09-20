@@ -26,9 +26,9 @@ class StageSetter extends Component {
       const shouldMoveStageRight = nextProps.characterX > thirdPoint + stageWidth / 3 && nextProps.stageX < 1024;
 
       if (shouldMoveStageLeft) {
-        setStageX(nextProps.characterX - (stageWidth / 3));
+        setStageX(Math.max(0, nextProps.characterX - (stageWidth / 3)));
       } if (shouldMoveStageRight) {
-        setStageX(nextProps.characterX - (stageWidth * 2 / 3));
+        setStageX(Math.max(0, nextProps.characterX - (stageWidth * 2 / 3)));
       }
     }
   }

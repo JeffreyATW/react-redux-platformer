@@ -5,6 +5,8 @@ import Character from './Character';
 const mapStateToProps = (state, ownProps) => ({
   x: state.character.position.x,
   y: state.character.position.y,
+  height: state.character.dimensions.height,
+  width: state.character.dimensions.width,
   ...ownProps
 });
 
