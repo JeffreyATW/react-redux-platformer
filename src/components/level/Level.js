@@ -45,8 +45,14 @@ class Level extends Component {
       <div style={this.getWrapperStyles()}>
         <FloorContainer />
         <FloorContainer width={50} height={stageHeight * 3} y={stageHeight / 2} x={-25} />
-        <FloorContainer width={200} y={300} x={100} />
-        <FloorContainer width={200} y={300} x={100} angle={45} />
+        <FloorContainer width={200} y={300} x={-10} angle={60} />
+        <FloorContainer width={200} y={300} x={10} angle={50} />
+        <FloorContainer width={200} y={300} x={30} angle={40} />
+        <FloorContainer width={200} y={300} x={70} angle={30} />
+        <FloorContainer width={200} y={300} x={90} angle={20} />
+        <FloorContainer width={200} y={300} x={110} angle={10} />
+        <FloorContainer width={200} y={300} x={130} angle={0} />
+        <FloorContainer width={200} y={300} x={150} angle={-10} />
         <CharacterContainer keys={this.keyListener} />
         <TileMap layers={[[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]]} tileSize={128} columns={4} rows={4} scale={1} />
       </div>
