@@ -35,6 +35,11 @@ class Character extends Component {
       x: 0,
       y: 0,
     };
+
+    const r = Math.ceil(Math.random() * 255);
+    const g = Math.ceil(Math.random() * 255);
+    const b = Math.ceil(Math.random() * 255);
+    this.background = `rgb(${r}, ${g}, ${b})`;
   }
 
   componentWillMount() {
@@ -85,7 +90,11 @@ class Character extends Component {
   }
   
   paint() {
-    return <div style={{ background: 'red', height: '100%', width: '100%' }} />;
+    const r = Math.ceil(Math.random() * 128);
+    const g = Math.ceil(Math.random() * 128);
+    const b = Math.ceil(Math.random() * 128);
+
+    return <div style={{ background: this.background, height: '100%', width: '100%' }} />;
   }
 
   render() {
