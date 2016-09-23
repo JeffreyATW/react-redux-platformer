@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import GameLoop from 'react-game-kit/lib/utils/game-loop';
 import { Loop, World } from 'react-game-kit';
 import store from '../../store';
+import ScoreContainer from '../score/ScoreContainer';
 import StageContainer from '../stage/StageContainer';
 import StageSetterContainer from '../stageSetter/StageSetterContainer';
 import LevelContainer from '../level/LevelContainer';
@@ -19,6 +20,7 @@ class App extends Component {
       <Provider store={store}>
         <Loop>
           <StageContainer>
+            <ScoreContainer />
             <StageSetterContainer />
             <World>
               <LevelContainer />

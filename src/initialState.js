@@ -3,6 +3,9 @@ const stageWidth = 750;
 const radius = (stageWidth / 5) / Math.sqrt(3);
 
 export default {
+  game: {
+    score: 0,
+  },
   six: {
     position: {
       x: stageWidth / 2,

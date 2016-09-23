@@ -20,8 +20,8 @@ class Level extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (
-      nextProps.sixX > nextProps.stageWidth / 10 &&
-      nextProps.sixX < nextProps.stageWidth * 9 / 10 &&
+      nextProps.sixX > nextProps.stageWidth * 2 / 10 &&
+      nextProps.sixX < nextProps.stageWidth * 8 / 10 &&
       (nextProps.blockCount / 5) * (nextProps.stageWidth / 10) < nextProps.sixY
     ) {
       this.props.addBlocks(5);
@@ -32,8 +32,8 @@ class Level extends Component {
     const { scale, sixY, sixX, stageHeight, stageWidth } = this.props;
 
     if (
-      sixX > stageWidth / 10 &&
-      sixX < stageWidth * 9 / 10
+      sixX > stageWidth * 2 / 10 &&
+      sixX < stageWidth * 8 / 10
     ) {
       this.levelY = sixY;
     }
