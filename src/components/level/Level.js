@@ -1,54 +1,37 @@
 import React, { Component, PropTypes } from 'react';
-import { KeyListener, TileMap } from 'react-game-kit';
-import FloorContainer from '../floor/FloorContainer';
-import CharacterContainer from '../character/CharacterContainer';
+import BlockContainer from '../block/BlockContainer';
+import SixContainer from '../six/SixContainer';
 
 class Level extends Component {
   static propTypes = {
+    addBlocks: PropTypes.func.isRequired,
+    scale: PropTypes.number.isRequired,
+    sixY: PropTypes.number.isRequired,
     stageHeight: PropTypes.number.isRequired,
-    stageX: PropTypes.number.isRequired
   }
 
-  constructor() {
-    super();
-
-    this.keyListener = new KeyListener();
-  }
-
-  componentDidMount() {
-    this.keyListener.subscribe([
-      this.keyListener.LEFT,
-      this.keyListener.RIGHT,
-      this.keyListener.UP,
-      this.keyListener.SPACE,
-      this.keyListener.DOWN,
-    ]);
-  }
-
-  componentWillUnmount() {
-    this.keyListener.unsubscribe();
+  componentWillMount() {
+    this.props.addBlocks(40);
   }
 
   getWrapperStyles() {
-    const { scale, stageX } = this.props;
+    const { scale, sixY, stageHeight } = this.props;
 
     return {
-      transform: `translateX(${-stageX * scale}px) scale(${scale})`,
+      transform: `translateY(${(-sixY + stageHeight / 2) * scale}px) scale(${scale})`,
       transformOrigin: 'top left',
     }
   }
 
   render() {
-    const { stageHeight } = this.props;
+    const { blockIds } = this.props;
 
     return (
       <div style={this.getWrapperStyles()}>
-        <FloorContainer />
-        <FloorContainer width={50} height={stageHeight * 3} y={stageHeight / 2} x={-25} />
-        <FloorContainer width={200} y={300} x={100} />
-        <FloorContainer width={200} y={300} x={100} angle={45} />
-        <CharacterContainer keys={this.keyListener} />
-        <TileMap layers={[[1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4, 1, 2, 3, 4]]} tileSize={128} columns={4} rows={4} scale={1} />
+        <SixContainer />
+        {blockIds.map(id =>
+          <BlockContainer id={id} key={`block_${id}`} />
+        )}
       </div>
     )
   }

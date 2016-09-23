@@ -1,21 +1,27 @@
 import React, { Component, PropTypes } from 'react';
 import { Body } from 'react-game-kit';
-import Matter from 'matter-js';
+import { World } from 'matter-js';
 
 class Character extends Component {
   static contextTypes = {
+    engine: PropTypes.object.isRequired,
     loop: PropTypes.object,
   };
 
   static propTypes = {
-    setCharacterPosition: PropTypes.func.isRequired,
+    setPosition: PropTypes.func.isRequired,
+    shape: PropTypes.string,
     x: PropTypes.number.isRequired,
     y: PropTypes.number.isRequired,
   }
 
-  jumping = true;
-  canDoubleJump = false;
-  didDoubleJump = true;
+  isStatic = false;
+  shape = 'rectangle';
+
+  makeArgs() {
+    const { x, y, height, width } = this.props;
+    return [x, y, width, height];
+  }
 
   constructor() {
     super();
@@ -23,72 +29,25 @@ class Character extends Component {
   }
 
   componentDidMount() {
-    this.context.loop.subscribe(this.boundUpdate);
+    this.updateId = this.context.loop.subscribe(this.boundUpdate);
   }
 
   componentWillUnmount() {
-    this.context.loop.unsubscribe(this.boundUpdate);
-  }
-
-  move = x => {
-    const body = this.body;
-    Matter.Body.setVelocity(body, { x, y: body.velocity.y });
-  };
-
-  jump = x => {
-    const body = this.body;
-    Matter.Body.setVelocity(body, { x: body.velocity.x, y: -10 });
-    if (this.canDoubleJump) {
-      this.didDoubleJump = true;
-    }
-    this.canDoubleJump = false;
-    this.jumping = true;
-  }
-
-  checkKeys(shouldMoveStageLeft, shouldMoveStageRight) {
-    const { keys } = this.props;
-
-    if (keys.isDown(keys.DOWN)) {
-      Matter.Body.set(this.body, 'friction', 0);
-    } else {
-      Matter.Body.set(this.body, 'friction', 0.001);
-    }
-
-    const right = keys.isDown(keys.RIGHT);
-    const left = keys.isDown(keys.LEFT);
-
-    if (right && !left) {
-      this.move(2);
-    }
-    if (left && !right) {  
-      this.move(-2);
-    }
-    
-    if (keys.isDown(keys.UP)) {
-      if (!this.jumping || this.canDoubleJump) {
-        this.jump();
-      }
-    } else if (this.jumping && !this.didDoubleJump) {
-      this.canDoubleJump = true;
-    }
+    this.context.loop.unsubscribe(this.updateId);
+    World.remove(this.context.engine.world, this.body);
   }
 
   update() {
-    const { x, y } = this.props;
+    const { x, y, angle } = this.props;
     if (this.body) {
 
-      if (this.body.position.x !== x || this.body.position.y !== y) {
-        this.props.setCharacterPosition(this.body.position);
+      if (
+        this.body.position.x !== x ||
+        this.body.position.y !== y ||
+        this.body.angle !== angle
+      ) {
+        this.props.setPosition(this.body.position);
       }
-
-      const velY = parseFloat(this.body.velocity.y.toFixed(5));
-      if (velY === 0 && this.jumping) {
-        this.jumping = false;
-        this.didDoubleJump = false;
-        this.canDoubleJump = false;
-      }
-
-      this.checkKeys();
     }
   }
 
@@ -103,18 +62,29 @@ class Character extends Component {
       height: `${height}px`,
       position: 'absolute',
       transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}deg)`,
-      transformOrigin: 'top left',
+      transformOrigin: 'center',
       width: `${width}px`,
     };
   }
+  
+  paint() {
+    return <div style={{ background: 'red', height: '100%', width: '100%' }} />;
+  }
 
   render() {
-    const { x, y, height, width } = this.props;
+    const { angle } = this.props;
 
     return (
-      <div style={this.getWrapperStyles()}>
-        <Body args={[x, y, width, height]} friction={.001} inertia={Infinity} ref={b => { this.body = b === null ? undefined : b.body; }}>
-          <div style={{ background: 'red', height: '100%', width: '100%' }} />
+      <div style={this.getWrapperStyles()} onClick={this.boundOnClick}>
+        <Body
+          angle={(angle * Math.PI) / 180}
+          args={this.makeArgs()}
+          frictionStatic={1}
+          ref={b => { this.body = b === null ? undefined : b.body; }}
+          shape={this.shape}
+          isStatic={this.props.isStatic}
+        >
+          {this.paint()}
         </Body>
       </div>
     );

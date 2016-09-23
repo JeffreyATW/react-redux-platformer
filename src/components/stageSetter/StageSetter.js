@@ -6,30 +6,15 @@ class StageSetter extends Component {
   }
 
   static propTypes = {
-    characterX: PropTypes.number.isRequired,
-    stageWidth: PropTypes.number.isRequired,
-    stageX: PropTypes.number.isRequired,
+    setScale: PropTypes.func.isRequired,
   }
 
   componentWillReceiveProps(nextProps, nextContext) {
     const { scale } = this.context;
-    const { setScale, characterX, stageWidth, setStageX } = this.props;
+    const { setScale } = this.props;
 
     if (scale !== nextContext.scale) {
       setScale(nextContext.scale);
-    }
-    if (characterX !== nextProps.characterX) {
-      const thirdPoint = Math.abs(nextProps.stageX) + (stageWidth / 3);
-
-      const shouldMoveStageLeft = nextProps.characterX < thirdPoint && nextProps.stageX > 0;
-      // todo store level width in redux state
-      const shouldMoveStageRight = nextProps.characterX > thirdPoint + stageWidth / 3 && nextProps.stageX < 1024;
-
-      if (shouldMoveStageLeft) {
-        setStageX(Math.max(0, nextProps.characterX - (stageWidth / 3)));
-      } if (shouldMoveStageRight) {
-        setStageX(Math.max(0, nextProps.characterX - (stageWidth * 2 / 3)));
-      }
     }
   }
 
