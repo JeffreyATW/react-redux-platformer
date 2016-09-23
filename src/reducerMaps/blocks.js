@@ -2,26 +2,13 @@ import update from 'react-addons-update';
 import actionTypes from '../actionTypes';
 
 export default new Map([
-  
-  [actionTypes.SET_BLOCK_POSITION, (state, action) => update(state, {
-      entities: {
-        blocks: {
-          [action.id]: {
-            position: {
-              $set: action.position,
-            },
-          },
-        },
-      },
-    }
-  )],
   [actionTypes.ADD_BLOCKS, (state, action) => {
     const newEntities = {};
     const newResults = [];
 
     let id = state.count;
 
-    for (; id < state.results.length + action.blocks; id += 1) {
+    for (; id < state.count + action.blocks; id += 1) {
       newEntities[id] = { id };
       newResults.push(id);
     }

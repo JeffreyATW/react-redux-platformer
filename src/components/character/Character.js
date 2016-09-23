@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Body } from 'react-game-kit';
-import { World } from 'matter-js';
+import Matter from 'matter-js';
 
 class Character extends Component {
   static contextTypes = {
@@ -9,11 +9,17 @@ class Character extends Component {
   };
 
   static propTypes = {
+    angle: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    setPosition: PropTypes.func,
     shape: PropTypes.string,
+    width: PropTypes.number.isRequired,
+    x: PropTypes.number.isRequired,
+    y: PropTypes.number.isRequired,
   }
 
-  isStatic = false;
   shape = 'rectangle';
+  color = 'red';
 
   makeArgs() {
     const { x, y } = this.state;
@@ -42,7 +48,7 @@ class Character extends Component {
 
   componentWillUnmount() {
     this.context.loop.unsubscribe(this.updateId);
-    World.remove(this.context.engine.world, this.body);
+    Matter.World.remove(this.context.engine.world, this.body);
   }
 
   update() {
@@ -59,6 +65,9 @@ class Character extends Component {
           angle: this.body.angle,
         });
       }
+      if (this.props.setPosition) {
+        this.props.setPosition(this.body.position);
+      }
     }
   }
 
@@ -69,7 +78,7 @@ class Character extends Component {
     return {
       height: `${height}px`,
       position: 'absolute',
-      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}rad)`,
+      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle.toFixed(10)}rad)`,
       transformOrigin: 'center',
       width: `${width}px`,
     };
@@ -80,6 +89,7 @@ class Character extends Component {
   }
 
   render() {
+    const { density } = this.props;
     const { angle } = this.state;
 
     return (
@@ -87,10 +97,13 @@ class Character extends Component {
         <Body
           angle={angle}
           args={this.makeArgs()}
+          density={density || 0.01}
+          frictionAir={0}
           frictionStatic={1}
           ref={b => { this.body = b === null ? undefined : b.body; }}
           shape={this.shape}
-          isStatic={this.props.isStatic}
+          slop={0}
+          isStatic={this.isStatic}
         >
           {this.paint()}
         </Body>

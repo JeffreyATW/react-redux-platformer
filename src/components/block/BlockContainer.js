@@ -17,14 +17,11 @@ const mapStateToProps = (state, ownProps) => {
     height = stageWidth / 10;
   }
 
-  const x = stageWidth / 4 + (id % 5 * width);
-  const y = stageHeight / 2 + (Math.floor(id / 5) * height);
-
-  const isStatic = getBlockCount(state) - id <= 5;
+  const x = stageWidth / 4 + (id % 5 * width) + width / 2;
+  const y = stageHeight / 2 + (Math.floor(id / 5) * height) + height / 2;
 
   return {
     angle: 0,
-    isStatic,
     x,
     y,
     width,

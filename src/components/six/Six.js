@@ -9,22 +9,6 @@ class Six extends Character {
     const { radius } = this.props;
     return [x, y, 6, radius];
   }
-
-  getWrapperStyles() {
-    const { angle, x, y } = this.state;
-    const { radius } = this.props;
-
-    const height = radius * 2;
-    const width = Math.sqrt(3) * radius;
-
-    return {
-      height: `${height}px`,
-      position: 'absolute',
-      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}rad)`,
-      transformOrigin: 'center',
-      width: `${width}px`,
-    };
-  }
   
   paint() {
     return (

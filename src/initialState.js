@@ -5,8 +5,8 @@ const radius = (stageWidth / 5) / Math.sqrt(3);
 export default {
   six: {
     position: {
-      x: stageWidth / 2 - radius / 2,
-      y: stageHeight / 2 - radius * 2,
+      x: stageWidth / 2,
+      y: stageHeight / 2 - stageWidth / 10,
     },
     radius,
   },
