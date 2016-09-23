@@ -12,21 +12,34 @@ class Level extends Component {
     stageWidth: PropTypes.number.isRequired,
   }
 
+  levelY = 0;
+
   componentWillMount() {
     this.props.addBlocks(40);
   }
 
   componentWillReceiveProps(nextProps) {
-    if ((nextProps.blockCount / 5) * (nextProps.stageWidth / 10) < nextProps.sixY) {
+    if (
+      nextProps.sixX > nextProps.stageWidth / 10 &&
+      nextProps.sixX < nextProps.stageWidth * 9 / 10 &&
+      (nextProps.blockCount / 5) * (nextProps.stageWidth / 10) < nextProps.sixY
+    ) {
       this.props.addBlocks(5);
     }
   }
 
   getWrapperStyles() {
-    const { scale, sixY, stageHeight, stageWidth } = this.props;
+    const { scale, sixY, sixX, stageHeight, stageWidth } = this.props;
+
+    if (
+      sixX > stageWidth / 10 &&
+      sixX < stageWidth * 9 / 10
+    ) {
+      this.levelY = sixY;
+    }
 
     return {
-      transform: `translateY(${(-sixY + stageHeight / 2 - stageWidth / 10) * scale}px) scale(${scale})`,
+      transform: `translateY(${(-this.levelY + stageHeight / 2 - stageWidth / 10) * scale}px) scale(${scale})`,
       transformOrigin: 'top left',
     }
   }

@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
   blockIds: getBlockIds(state),
   scale: state.stage.scale,
   sixY: state.six.position.y,
+  sixX: state.six.position.x,
   stageHeight: state.stage.height,
   stageWidth: state.stage.width,
 });
