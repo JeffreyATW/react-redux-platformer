@@ -5,12 +5,6 @@ export const addBlocks = blocks => ({
   blocks,
 });
 
-export const setBlockPosition = (id, position) => ({
-  type: actionTypes.SET_BLOCK_POSITION,
-  id,
-  position,
-});
-
 export const removeBlock = id => ({
   type: actionTypes.REMOVE_BLOCK,
   id,

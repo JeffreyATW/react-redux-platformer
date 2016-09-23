@@ -15,11 +15,3 @@ export const getBlocks = createSelector(
   getBlockIds, getBlockEntities,
   (blockIds, blockEntities) => blockIds.map(id => blockEntities[id])
 );
-
-export const makeGetBlockPosition = () => {
-  const getBlockById = makeGetBlockById();
-  return createSelector(
-    getBlockById,
-    block => block.position
-  );
-}

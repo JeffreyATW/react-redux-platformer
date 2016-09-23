@@ -1,7 +1,6 @@
 const stageHeight = 1134;
 const stageWidth = 750;
 const radius = (stageWidth / 5) / Math.sqrt(3);
-console.log(radius);
 
 export default {
   six: {

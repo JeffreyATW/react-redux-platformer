@@ -1,49 +1,38 @@
 import { connect } from 'react-redux';
-import { setBlockPosition, removeBlock } from '../../actions/blocks';
-import { getBlockCount, makeGetBlockPosition } from '../../selectors/blocks';
+import { removeBlock } from '../../actions/blocks';
+import { getBlockCount } from '../../selectors/blocks';
 
 import Block from './Block';
 
-const mapStateToProps = () => {
-  const getBlockPosition = makeGetBlockPosition();
+const mapStateToProps = (state, ownProps) => {
+  let { id, width, height } = ownProps;
+  const stageHeight = state.stage.height;
+  const stageWidth = state.stage.width;
 
-  return (state, ownProps) => {
-    let { id, width, height } = ownProps;
-    const stageHeight = state.stage.height;
-    const stageWidth = state.stage.width;
-    let { x, y } = getBlockPosition(state, id) || {};
+  if (width === undefined) {
+    width = stageWidth / 10;
+  }
 
-    if (width === undefined) {
-      width = stageWidth / 10;
-    }
+  if (height === undefined) {
+    height = stageWidth / 10;
+  }
 
-    if (height === undefined) {
-      height = stageWidth / 10;
-    }
+  const x = stageWidth / 4 + (id % 5 * width);
+  const y = stageHeight / 2 + (Math.floor(id / 5) * height);
 
-    if (x === undefined) {
-      x = stageWidth / 4 + (id % 5 * width);
-    }
+  const isStatic = getBlockCount(state) - id <= 5;
 
-    if (y === undefined) {
-      y = stageHeight / 2 + (Math.floor(id / 5) * height);
-    }
-
-    const isStatic = getBlockCount(state) - id <= 5;
-
-    return {
-      angle: 0,
-      isStatic,
-      x,
-      y,
-      width,
-      height,
-    };
+  return {
+    angle: 0,
+    isStatic,
+    x,
+    y,
+    width,
+    height,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  setPosition: position => dispatch(setBlockPosition(ownProps.id, position)),
   removeBlock: () => dispatch(removeBlock(ownProps.id)),
 });
 

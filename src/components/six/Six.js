@@ -5,16 +5,14 @@ class Six extends Character {
   shape = 'polygon';
 
   makeArgs() {
-    const { x, y, radius } = this.props;
+    const { x, y } = this.state;
+    const { radius } = this.props;
     return [x, y, 6, radius];
   }
 
   getWrapperStyles() {
-    const { x, y, radius } = this.props;
-    let angle = 0;
-    if (this.body) {
-      angle = this.body.angle * (180/Math.PI);
-    }
+    const { angle, x, y } = this.state;
+    const { radius } = this.props;
 
     const height = radius * 2;
     const width = Math.sqrt(3) * radius;
@@ -22,7 +20,7 @@ class Six extends Character {
     return {
       height: `${height}px`,
       position: 'absolute',
-      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}deg)`,
+      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}rad)`,
       transformOrigin: 'center',
       width: `${width}px`,
     };

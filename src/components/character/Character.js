@@ -9,23 +9,31 @@ class Character extends Component {
   };
 
   static propTypes = {
-    setPosition: PropTypes.func.isRequired,
     shape: PropTypes.string,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
   }
 
   isStatic = false;
   shape = 'rectangle';
 
   makeArgs() {
-    const { x, y, height, width } = this.props;
+    const { x, y } = this.state;
+    const { height, width } = this.props;
     return [x, y, width, height];
   }
 
   constructor() {
     super();
     this.boundUpdate = this.update.bind(this);
+    this.state = {
+      angle: 0,
+      x: 0,
+      y: 0,
+    };
+  }
+
+  componentWillMount() {
+    const { angle, x, y } = this.props;
+    this.setState({ angle, x, y });
   }
 
   componentDidMount() {
@@ -38,30 +46,30 @@ class Character extends Component {
   }
 
   update() {
-    const { x, y, angle } = this.props;
+    const { x, y, angle } = this.state;
     if (this.body) {
-
       if (
         this.body.position.x !== x ||
         this.body.position.y !== y ||
         this.body.angle !== angle
       ) {
-        this.props.setPosition(this.body.position);
+        this.setState({
+          x: this.body.position.x,
+          y: this.body.position.y,
+          angle: this.body.angle,
+        });
       }
     }
   }
 
   getWrapperStyles() {
-    const { x, y, height, width } = this.props;
-    let angle = 0;
-    if (this.body) {
-      angle = this.body.angle * (180/Math.PI);
-    }
+    const { x, y, angle } = this.state;
+    const { height, width } = this.props;
 
     return {
       height: `${height}px`,
       position: 'absolute',
-      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}deg)`,
+      transform: `translate(${x - width / 2}px, ${y - height / 2}px) rotate(${angle}rad)`,
       transformOrigin: 'center',
       width: `${width}px`,
     };
@@ -72,12 +80,12 @@ class Character extends Component {
   }
 
   render() {
-    const { angle } = this.props;
+    const { angle } = this.state;
 
     return (
       <div style={this.getWrapperStyles()} onClick={this.boundOnClick}>
         <Body
-          angle={(angle * Math.PI) / 180}
+          angle={angle}
           args={this.makeArgs()}
           frictionStatic={1}
           ref={b => { this.body = b === null ? undefined : b.body; }}

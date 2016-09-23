@@ -9,7 +9,7 @@ const mapStateToProps = (state, ownProps) => {
   const radius = state.six.radius;
 
   if (angle === undefined) {
-    angle = 30;
+    angle = 30 * (Math.PI / 180);
   }
 
   return {
