@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import { BLOCK_DIMENSION, STAGE_WIDTH } from '../../constants';
 import Character from '../character/Character';
 import PartContainer from '../part/PartContainer';
 import Matter from 'matter-js';
@@ -12,6 +13,14 @@ class Block extends Character {
   constructor() {
     super();
 
+    this.state = {
+      angle: 0,
+      x: 0,
+      y: 0,
+      width: STAGE_WIDTH / 2,
+      height: BLOCK_DIMENSION,
+    }
+
     const r = Math.ceil(Math.random() * 255);
     const g = Math.ceil(Math.random() * 64);
     const b = Math.ceil(Math.random() * 128);
@@ -22,8 +31,12 @@ class Block extends Character {
     this.body = this.props.body;
     Matter.World.addBody(this.context.engine.world, this.body);
 
-    const { angle, x, y } = this.props;
-    this.setState({ angle, x, y });
+    this.setState({
+      angle: this.body.angle,
+      height: this.props.rows * BLOCK_DIMENSION,
+      x: this.body.position.x,
+      y: this.body.position.y
+    });
   }
 
   componentWillUnmount() {

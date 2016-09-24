@@ -1,5 +1,4 @@
 import { connect } from 'react-redux';
-import { BLOCK_DIMENSION } from '../../constants';
 import { removeBlock } from '../../actions/blocks';
 import Part from './Part';
 
@@ -10,10 +9,6 @@ const mapStateToProps = (state, ownProps) => {
     angle,
     background,
     body,
-    x: body.position.x,
-    y: body.position.y,
-    width: BLOCK_DIMENSION,
-    height: BLOCK_DIMENSION,
   };
 };
 

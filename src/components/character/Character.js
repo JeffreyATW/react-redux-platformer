@@ -7,21 +7,18 @@ class Character extends Component {
   };
 
   static propTypes = {
-    angle: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
+    angle: PropTypes.number,
     setPosition: PropTypes.func,
     shape: PropTypes.string,
-    width: PropTypes.number.isRequired,
-    x: PropTypes.number.isRequired,
-    y: PropTypes.number.isRequired,
+    x: PropTypes.number,
+    y: PropTypes.number,
   }
 
   shape = 'rectangle';
   color = 'red';
 
   makeArgs() {
-    const { x, y } = this.state;
-    const { height, width } = this.props;
+    const { x, y, width, height } = this.state;
     return [x, y, width, height];
   }
 
@@ -38,11 +35,6 @@ class Character extends Component {
     const g = Math.ceil(Math.random() * 64);
     const b = Math.ceil(Math.random() * 128);
     this.background = `rgb(${r}, ${g}, ${b})`;
-  }
-
-  componentWillMount() {
-    const { angle, x, y } = this.props;
-    this.setState({ angle, x, y });
   }
 
   componentDidMount() {
@@ -74,8 +66,7 @@ class Character extends Component {
   }
 
   getWrapperStyles() {
-    const { x, y, angle } = this.state;
-    const { height, width } = this.props;
+    const { x, y, angle, height, width } = this.state;
 
     return {
       height: `${height}px`,
@@ -91,8 +82,7 @@ class Character extends Component {
   }
 
   render() {
-    const { density } = this.props;
-    const { angle } = this.state;
+    const { angle, density } = this.state;
 
     return (
       <div style={this.getWrapperStyles()} onClick={this.boundOnClick}>

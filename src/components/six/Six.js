@@ -1,13 +1,26 @@
 import React from 'react';
+import { BLOCK_DIMENSION, SIX_RADIUS, STAGE_WIDTH } from '../../constants';
 import Character from '../character/Character';
 
 class Six extends Character {
   shape = 'polygon';
 
+  constructor() {
+    super();
+
+    this.state = {
+      angle: 30 * (Math.PI / 180),
+      density: 0.0009,
+      x: STAGE_WIDTH / 2,
+      y: STAGE_WIDTH / 2 + BLOCK_DIMENSION * 2,
+      height: SIX_RADIUS * 2,
+      width: Math.sqrt(3) * SIX_RADIUS,
+    }
+  }
+
   makeArgs() {
     const { x, y } = this.state;
-    const { radius } = this.props;
-    return [x, y, 6, radius];
+    return [x, y, 6, SIX_RADIUS];
   }
   
   paint() {
