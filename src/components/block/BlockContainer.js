@@ -1,39 +1,27 @@
 import { connect } from 'react-redux';
-import { removeBlock } from '../../actions/blocks';
-import { getBlockCount } from '../../selectors/blocks';
+import { BLOCK_DIMENSION, STAGE_WIDTH } from '../../constants';
+import { makeGetBlockById } from '../../selectors/blocks';
 
 import Block from './Block';
 
-const mapStateToProps = (state, ownProps) => {
-  let { id, width, height } = ownProps;
-  const stageHeight = state.stage.height;
-  const stageWidth = state.stage.width;
+const mapStateToProps = () => {
+  const getBlockById = makeGetBlockById();
+  return (state, ownProps) => {
+    let { id } = ownProps;
+    const block = getBlockById(state, id);
 
-  if (width === undefined) {
-    width = stageWidth / 10;
-  }
-
-  if (height === undefined) {
-    height = stageWidth / 10;
-  }
-
-  const x = stageWidth / 4 + (id % 5 * width) + width / 2;
-  const y = stageHeight / 2 + (Math.floor(id / 5) * height) + height / 2;
-
-  return {
-    angle: 0,
-    x,
-    y,
-    width,
-    height,
+    return {
+      angle: block.body.angle,
+      body: block.body,
+      id,
+      x: block.body.position.x,
+      y: block.body.position.y,
+      width: STAGE_WIDTH / 2,
+      height: block.rows * BLOCK_DIMENSION,
+    };
   };
 };
 
-const mapDispatchToProps = (dispatch, ownProps) => ({
-  removeBlock: () => dispatch(removeBlock(ownProps.id)),
-});
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(Block);

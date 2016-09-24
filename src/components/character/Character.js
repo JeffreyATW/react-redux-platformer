@@ -1,10 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { Body } from 'react-game-kit';
-import Matter from 'matter-js';
 
 class Character extends Component {
   static contextTypes = {
-    engine: PropTypes.object.isRequired,
     loop: PropTypes.object,
   };
 
@@ -37,8 +35,8 @@ class Character extends Component {
     };
 
     const r = Math.ceil(Math.random() * 255);
-    const g = Math.ceil(Math.random() * 255);
-    const b = Math.ceil(Math.random() * 255);
+    const g = Math.ceil(Math.random() * 64);
+    const b = Math.ceil(Math.random() * 128);
     this.background = `rgb(${r}, ${g}, ${b})`;
   }
 
@@ -53,7 +51,6 @@ class Character extends Component {
 
   componentWillUnmount() {
     this.context.loop.unsubscribe(this.updateId);
-    Matter.World.remove(this.context.engine.world, this.body);
   }
 
   update() {
@@ -90,10 +87,6 @@ class Character extends Component {
   }
   
   paint() {
-    const r = Math.ceil(Math.random() * 128);
-    const g = Math.ceil(Math.random() * 128);
-    const b = Math.ceil(Math.random() * 128);
-
     return <div style={{ background: this.background, height: '100%', width: '100%' }} />;
   }
 
@@ -106,8 +99,7 @@ class Character extends Component {
         <Body
           angle={angle}
           args={this.makeArgs()}
-          density={density || 0.01}
-          frictionAir={0}
+          density={density || 1}
           frictionStatic={1}
           ref={b => { this.body = b === null ? undefined : b.body; }}
           shape={this.shape}

@@ -3,19 +3,25 @@ import actionTypes from '../actionTypes';
 
 export default new Map([
   [actionTypes.ADD_BLOCKS, (state, action) => {
+    const { blocks, rows } = action;
+
     const newEntities = {};
     const newResults = [];
 
-    let id = state.count;
+    let i = 0;
 
-    for (; id < state.count + action.blocks; id += 1) {
-      newEntities[id] = { id };
+    for (; i < blocks.length; i += 1) {
+      const id = state.count + i;
+      newEntities[id] = { id, body: blocks[i], rows };
       newResults.push(id);
     }
 
     return update(state, {
       count: {
-        $set: id,
+        $set: state.count + blocks.length,
+      },
+      rows: {
+        $set: state.rows + rows,
       },
       entities: {
         blocks: {

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Provider } from 'react-redux';
 import GameLoop from 'react-game-kit/lib/utils/game-loop';
-import { Loop, World } from 'react-game-kit';
+import { Loop, Stage, World } from 'react-game-kit';
+import { STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
 import store from '../../store';
 import ScoreContainer from '../score/ScoreContainer';
-import StageContainer from '../stage/StageContainer';
 import StageSetterContainer from '../stageSetter/StageSetterContainer';
 import LevelContainer from '../level/LevelContainer';
 import './App.css';
@@ -19,13 +19,13 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Loop>
-          <StageContainer>
+          <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
             <ScoreContainer />
             <StageSetterContainer />
             <World>
               <LevelContainer />
             </World>
-          </StageContainer>
+          </Stage>
         </Loop>
       </Provider>
     );

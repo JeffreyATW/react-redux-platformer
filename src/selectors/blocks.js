@@ -2,7 +2,7 @@ import { createSelector } from 'reselect';
 
 export const getBlockIds = state => state.blocks.results;
 export const getBlockEntities = state => state.blocks.entities.blocks;
-export const getBlockCount = state => state.blocks.count;
+export const getRows = state => state.blocks.rows;
 
 const getProps = (state, props) => props;
 

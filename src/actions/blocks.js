@@ -1,8 +1,9 @@
 import actionTypes from '../actionTypes';
 
-export const addBlocks = blocks => ({
+export const addBlocks = (blocks, rows) => ({
   type: actionTypes.ADD_BLOCKS,
   blocks,
+  rows,
 });
 
 export const removeBlock = id => ({
