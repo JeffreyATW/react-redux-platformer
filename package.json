@@ -2,6 +2,7 @@
   "name": "react-redux-platformer",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://jeffreyatw.github.io/react-redux-platformer",
   "devDependencies": {
     "react-scripts": "0.4.1"
   },
