@@ -41,6 +41,7 @@ class Block extends Character {
 
   componentWillUnmount() {
     Matter.World.remove(this.context.engine.world, this.body);
+    this.context.loop.unsubscribe(this.updateId);
   }
 
   render() {
