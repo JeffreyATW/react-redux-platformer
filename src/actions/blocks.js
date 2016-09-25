@@ -6,7 +6,8 @@ export const addBlocks = (blocks, rows) => ({
   rows,
 });
 
-export const removeBlock = id => ({
+export const removeBlock = (id, points) => ({
   type: actionTypes.REMOVE_BLOCK,
   id,
+  points,
 });

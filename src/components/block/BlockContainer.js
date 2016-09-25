@@ -21,7 +21,7 @@ const mapStateToProps = () => {
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  removeBlock: () => dispatch(removeBlock(ownProps.id)),
+  removeBlock: () => dispatch(removeBlock(ownProps.id, false)),
 });
 
 export default connect(

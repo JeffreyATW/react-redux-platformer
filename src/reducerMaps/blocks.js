@@ -33,18 +33,16 @@ export default new Map([
       },
     });
   }],
-  [actionTypes.REMOVE_BLOCK, (state, action) => {
-    return update(state, {
-      entities: {
-        blocks: {
-          [action.id]: {
-            $set: undefined,
-          },
+  [actionTypes.REMOVE_BLOCK, (state, action) => update(state, {
+    entities: {
+      blocks: {
+        [action.id]: {
+          $set: undefined,
         },
       },
-      results: {
-        $splice: [[state.results.indexOf(action.id), 1]],
-      },
-    });
-  }],
+    },
+    results: {
+      $splice: [[state.results.indexOf(action.id), 1]],
+    },
+  })],
 ]);
