@@ -8,6 +8,7 @@ import Matter from 'matter-js';
 class Level extends Component {
   static propTypes = {
     addBlocks: PropTypes.func.isRequired,
+    countdown: PropTypes.number,
     rows: PropTypes.number.isRequired,
     scale: PropTypes.number.isRequired,
     sixY: PropTypes.number.isRequired,
@@ -80,61 +81,61 @@ class Level extends Component {
      7,7,8,6,6]
   ];
 
-  levelY = 0;
-
   componentWillReceiveProps(nextProps) {
-    const { rows, sixX, sixY } = nextProps;
+    const { addBlocks, beginCountdown, countdown, rows, setStageY, sixX, sixY } = nextProps;
+    if (countdown === undefined) {
 
-    let totalRows = rows;
-    let currentRows = 0;
+      let totalRows = rows;
+      let currentRows = 0;
 
-    const blocks = [];
+      const blocks = [];
 
-    while (
-      sixX > BLOCK_DIMENSION * 2 &&
-      sixX < BLOCK_DIMENSION * 8 &&
-      totalRows * BLOCK_DIMENSION < sixY
-    ) {
-      const composite = Level.composites[Math.floor(Math.random() * Level.composites.length)];
-
-      for (let i = 0; composite.indexOf(i) > -1; i += 1) {
-        const parts = [];
-
-        for (let j = 0; j < composite.length; j += 1) {
-          if (composite[j] === i) {
-            parts.push(Matter.Bodies.rectangle(
-              ((j % 5) * BLOCK_DIMENSION) + STAGE_WIDTH / 2 - BLOCK_DIMENSION * 2,
-              (Math.floor(j / 5) + totalRows) * BLOCK_DIMENSION + STAGE_HEIGHT / 2 + BLOCK_DIMENSION / 2,
-              BLOCK_DIMENSION,
-              BLOCK_DIMENSION
-            ));
-          }
+      if (
+        sixX > BLOCK_DIMENSION * 2 &&
+        sixX < BLOCK_DIMENSION * 8
+      ) {
+        if (this.props.sixY !== sixY) {
+          setStageY(sixY);
         }
 
-        blocks.push(Matter.Body.create({ parts }));
+        while (totalRows * BLOCK_DIMENSION < sixY + BLOCK_DIMENSION) {
+          const composite = Level.composites[Math.floor(Math.random() * Level.composites.length)];
+
+          for (let i = 0; composite.indexOf(i) > -1; i += 1) {
+            const parts = [];
+
+            for (let j = 0; j < composite.length; j += 1) {
+              if (composite[j] === i) {
+                parts.push(Matter.Bodies.rectangle(
+                  ((j % 5) * BLOCK_DIMENSION) + STAGE_WIDTH / 2 - BLOCK_DIMENSION * 2,
+                  (Math.floor(j / 5) + totalRows) * BLOCK_DIMENSION + STAGE_HEIGHT / 2 + BLOCK_DIMENSION / 2,
+                  BLOCK_DIMENSION,
+                  BLOCK_DIMENSION
+                ));
+              }
+            }
+
+            blocks.push(Matter.Body.create({ parts }));
+          }
+
+          currentRows += composite.length / 5;
+          totalRows += composite.length / 5;
+        }
+      } else {
+        beginCountdown();
       }
 
-      currentRows += composite.length / 5;
-      totalRows += composite.length / 5;
-    }
-
-    if (currentRows > 0) {
-      this.props.addBlocks(blocks, currentRows);
+      if (currentRows > 0) {
+        addBlocks(blocks, currentRows);
+      }
     }
   }
 
   getWrapperStyles() {
-    const { scale, sixY, sixX } = this.props;
-
-    if (
-      sixX > BLOCK_DIMENSION * 2 &&
-      sixX < BLOCK_DIMENSION * 8
-    ) {
-      this.levelY = sixY;
-    }
+    const { scale, stageY } = this.props;
 
     return {
-      transform: `translateY(${(-this.levelY + STAGE_HEIGHT / 2 - BLOCK_DIMENSION) * scale}px) scale(${scale})`,
+      transform: `translateY(${(-stageY + STAGE_HEIGHT / 2 - BLOCK_DIMENSION) * scale}px) scale(${scale})`,
       transformOrigin: 'top left',
     }
   }

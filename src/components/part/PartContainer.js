@@ -9,6 +9,7 @@ const mapStateToProps = (state, ownProps) => {
     angle,
     background,
     body,
+    gameOver: state.game.over,
   };
 };
 

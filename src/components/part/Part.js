@@ -36,7 +36,9 @@ class Part extends Character {
   }
 
   onClick() {
-    this.props.removeBlock();
+    if (!this.props.gameOver) {
+      this.props.removeBlock();
+    }
   }
 
   render() {

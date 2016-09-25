@@ -46,14 +46,21 @@ class Character extends Component {
   }
 
   update() {
-    const { x, y, angle } = this.state;
+    const { angle, x, y } = this.state;
     if (this.body) {
       const fixedX = Number(x.toFixed(0));
       const fixedY = Number(y.toFixed(0));
       const fixedAngle = Number(angle.toFixed(4));
       const fixedBodyX = Number(this.body.position.x.toFixed(0));
       const fixedBodyY = Number(this.body.position.y.toFixed(0));
-      const fixedBodyAngle = Number(this.body.angle.toFixed(4));
+
+      // don't use incorrect angle for Part
+      let fixedBodyAngle;
+      if (this.props.angle === undefined) {
+        fixedBodyAngle = Number(this.body.angle.toFixed(4));
+      } else {
+        fixedBodyAngle = Number(this.props.angle.toFixed(4));
+      }
       if (
         fixedX !== fixedBodyX ||
         fixedY !== fixedBodyY ||

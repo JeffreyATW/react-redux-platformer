@@ -8,7 +8,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { createStore, compose } from 'redux';
+import { applyMiddleware, createStore, compose } from 'redux';
+import thunk from 'redux-thunk';
 import initialState from './initialState';
 import reducer from './reducer';
 
@@ -24,6 +25,7 @@ const store = createStore(
   reducer,
   initialState,
   compose(
+    applyMiddleware(thunk),
     devTools
   )
 );

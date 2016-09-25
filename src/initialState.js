@@ -1,6 +1,8 @@
 export default {
   game: {
     score: 0,
+    over: false,
+    started: false,
   },
   six: {
     position: {
@@ -18,5 +20,6 @@ export default {
   },
   stage: {
     scale: 1,
+    y: 0,
   },
 };
