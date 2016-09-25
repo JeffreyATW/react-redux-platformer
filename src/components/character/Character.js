@@ -59,7 +59,7 @@ class Character extends Component {
       if (this.props.angle === undefined) {
         fixedBodyAngle = Number(this.body.angle.toFixed(4));
       } else {
-        fixedBodyAngle = Number(this.props.angle.toFixed(4));
+        fixedBodyAngle = this.props.angle;
       }
       if (
         fixedX !== fixedBodyX ||

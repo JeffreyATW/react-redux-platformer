@@ -1,10 +1,8 @@
-import React, { PropTypes } from 'react';
-import { BLOCK_DIMENSION, STAGE_WIDTH } from '../../constants';
-import Character from '../character/Character';
+import React, { Component, PropTypes } from 'react';
 import PartContainer from '../part/PartContainer';
 import Matter from 'matter-js';
 
-class Block extends Character {
+class Block extends Component {
   static contextTypes = {
     engine: PropTypes.object.isRequired,
     loop: PropTypes.object,
@@ -15,11 +13,9 @@ class Block extends Character {
 
     this.state = {
       angle: 0,
-      x: 0,
-      y: 0,
-      width: STAGE_WIDTH / 2,
-      height: BLOCK_DIMENSION,
     }
+
+    this.boundUpdate = this.update.bind(this);
 
     const r = Math.ceil(Math.random() * 255);
     const g = Math.ceil(Math.random() * 64);
@@ -33,15 +29,32 @@ class Block extends Character {
 
     this.setState({
       angle: this.body.angle,
-      height: this.props.rows * BLOCK_DIMENSION,
-      x: this.body.position.x,
-      y: this.body.position.y
     });
+  }
+
+  componentDidMount() {
+    this.updateId = this.context.loop.subscribe(this.boundUpdate);
   }
 
   componentWillUnmount() {
     Matter.World.remove(this.context.engine.world, this.body);
     this.context.loop.unsubscribe(this.updateId);
+  }
+
+  update() {
+    const { angle } = this.state;
+    if (this.body) {
+      const fixedAngle = Number(angle.toFixed(4));
+      const fixedBodyAngle = Number(this.body.angle.toFixed(4));
+
+      if (
+        fixedAngle !== fixedBodyAngle
+      ) {
+        this.setState({
+          angle: fixedBodyAngle,
+        });
+      }
+    }
   }
 
   render() {
