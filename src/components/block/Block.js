@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import { STAGE_HEIGHT } from '../../constants';
 import PartContainer from '../part/PartContainer';
 import Matter from 'matter-js';
 
@@ -43,16 +44,22 @@ class Block extends Component {
 
   update() {
     const { angle } = this.state;
-    if (this.body) {
-      const fixedAngle = Number(angle.toFixed(4));
-      const fixedBodyAngle = Number(this.body.angle.toFixed(4));
+    const { stageY, removeBlock } = this.props;
 
-      if (
-        fixedAngle !== fixedBodyAngle
-      ) {
-        this.setState({
-          angle: fixedBodyAngle,
-        });
+    if (this.body) {
+      if (this.body.position.y > stageY + STAGE_HEIGHT) {
+        removeBlock();
+      } else {
+        const fixedAngle = Number(angle.toFixed(4));
+        const fixedBodyAngle = Number(this.body.angle.toFixed(4));
+
+        if (
+          fixedAngle !== fixedBodyAngle
+        ) {
+          this.setState({
+            angle: fixedBodyAngle,
+          });
+        }
       }
     }
   }

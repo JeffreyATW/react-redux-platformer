@@ -1,4 +1,5 @@
 import { connect } from 'react-redux';
+import { removeBlock } from '../../actions/blocks';
 import { makeGetBlockById } from '../../selectors/blocks';
 
 import Block from './Block';
@@ -13,10 +14,16 @@ const mapStateToProps = () => {
       body: block.body,
       id,
       rows: block.rows,
+      stageY: state.stage.y,
     };
   };
 };
 
+const mapDispatchToProps = (dispatch, ownProps) => ({
+  removeBlock: () => dispatch(removeBlock(ownProps.id)),
+});
+
 export default connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(Block);
