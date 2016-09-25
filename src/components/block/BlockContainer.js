@@ -12,6 +12,7 @@ const mapStateToProps = () => {
 
     return {
       body: block.body,
+      gameOver: state.game.over,
       id,
       rows: block.rows,
       stageY: state.stage.y,

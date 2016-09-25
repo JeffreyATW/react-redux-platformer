@@ -94,7 +94,12 @@ class Character extends Component {
   }
   
   paint() {
-    return <div style={{ background: this.background, height: '100%', width: '100%' }} />;
+    let background = this.background;
+    if (this.props.background) {
+      background = this.props.background;
+    }
+
+    return <div style={{ background, height: '100%', transition: 'background .5s', width: '100%' }} />;
   }
 
   render() {

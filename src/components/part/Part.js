@@ -23,7 +23,6 @@ class Part extends Character {
 
   componentWillMount() {
     this.body = this.props.body;
-    this.background = this.props.background;
 
     const { angle } = this.props;
     this.setState({ angle, x: this.body.position.x, y: this.body.position.y });

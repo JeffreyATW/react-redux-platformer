@@ -12,16 +12,16 @@ class Block extends Component {
   constructor() {
     super();
 
-    this.state = {
-      angle: 0,
-    }
-
-    this.boundUpdate = this.update.bind(this);
-
     const r = Math.ceil(Math.random() * 255);
     const g = Math.ceil(Math.random() * 64);
     const b = Math.ceil(Math.random() * 128);
-    this.background = `rgb(${r}, ${g}, ${b})`;
+
+    this.state = {
+      angle: 0,
+      background: `rgb(${r}, ${g}, ${b})`,
+    }
+
+    this.boundUpdate = this.update.bind(this);
   }
 
   componentWillMount() {
@@ -40,6 +40,14 @@ class Block extends Component {
   componentWillUnmount() {
     Matter.World.remove(this.context.engine.world, this.body);
     this.context.loop.unsubscribe(this.updateId);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.gameOver) {
+      this.setState({
+        background: 'black',
+      });
+    }
   }
 
   update() {
@@ -66,12 +74,12 @@ class Block extends Component {
 
   render() {
     const { id } = this.props;
-    const { angle } = this.state;
+    const { angle, background } = this.state;
 
     return (
       <div>
         {this.body.parts.map((part, i) =>
-          i !== 0 && <PartContainer angle={angle} blockId={id} key={`block_${id}_part_${i}`} body={part} background={this.background} />
+          i !== 0 && <PartContainer angle={angle} blockId={id} key={`block_${id}_part_${i}`} body={part} background={background} />
         )}
       </div>
     );
