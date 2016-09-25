@@ -6,9 +6,11 @@ import GameOverContainer from '../gameOver/GameOverContainer';
 import CountdownContainer from '../countdown/CountdownContainer';
 import StageSetterContainer from '../stageSetter/StageSetterContainer';
 import LevelContainer from '../level/LevelContainer';
+import './Game.css';
 
 class Game extends Component {
   static propTypes = {
+    restart: PropTypes.func.isRequired,
     start: PropTypes.func.isRequired,
     started: PropTypes.bool.isRequired,
   }
@@ -24,12 +26,15 @@ class Game extends Component {
   }
 
   render() {
-    if (this.props.started) {
+    const { started, restart } = this.props;
+
+    if (started) {
       return (
         <Loop>
           <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
             <StageSetterContainer />
             <div className="ui">
+              <button className="restart" onClick={restart}>Restart</button>
               <ScoreContainer />
               <GameOverContainer />
               <CountdownContainer />

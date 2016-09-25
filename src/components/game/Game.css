@@ -1,0 +1,13 @@
+.ui {
+  font-size: 2em;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  z-index: 1;
+}
+
+.restart {
+  right: .5em;
+  position: absolute;
+  top: .5em;
+}

@@ -6,15 +6,10 @@ class GameOver extends Component {
   }
 
   render() {
-    const { gameOver, restart } = this.props;
+    const { gameOver } = this.props;
 
     if (gameOver) {
-      return (
-        <div>
-          {'Game Over! '}
-          <button onClick={restart}>Restart</button>
-        </div>
-      );
+      return <div>Game Over!</div>;
     }
     return false;
   }

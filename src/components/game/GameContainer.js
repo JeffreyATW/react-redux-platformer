@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { start } from '../../actions/game';
+import { restart, start } from '../../actions/game';
 
 import Game from './Game';
 
@@ -8,6 +8,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  restart: () => dispatch(restart()),
   start: () => dispatch(start()),
 });
 
