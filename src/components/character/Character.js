@@ -69,7 +69,7 @@ class Character extends Component {
         this.setState({
           x: this.body.position.x,
           y: this.body.position.y,
-          angle: this.body.angle,
+          angle: this.props.angle === undefined ? fixedBodyAngle : this.props.angle,
         });
         if (this.props.setPosition) {
           this.props.setPosition({
