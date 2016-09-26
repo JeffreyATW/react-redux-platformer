@@ -7,16 +7,16 @@ export default new Map([
       $set: true,
     },
   })],
-  [actionTypes.REMOVE_BLOCK, (state, action) => {
-    if (action.points) {
-      return update(state, {
-        score: {
-          $set: state.score + 5,
-        },
-      });
-    }
-    return state;
-  }],
+  [actionTypes.ADD_POINTS, (state, action) => update(state, {
+    score: {
+      $set: state.score + action.amount,
+    },
+  })],
+  [actionTypes.SET_HIGH_SCORE, (state, action) => update(state, {
+    highScore: {
+      $set: action.score,
+    },
+  })],
   [actionTypes.GAME_OVER, (state, action) => update(state, {
     countdown: {
       $set: 0,

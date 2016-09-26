@@ -24,6 +24,26 @@ export const restart = () => dispatch => {
   dispatch(actuallyRestart());
 };
 
+export const addPoints = amount => ({
+  type: actionTypes.ADD_POINTS,
+  amount,
+});
+
+export const setHighScore = score => ({
+  type: actionTypes.SET_HIGH_SCORE,
+  score,
+});
+
+export const score = amount => (dispatch, getState) => {
+  dispatch(addPoints(amount));
+  const highScore = getState().game.highScore;
+  const score = getState().game.score;
+  if (score > highScore) {
+    window.localStorage.setItem('sixHighScore', score);
+    dispatch(setHighScore(score));
+  }
+}
+
 export const beginCountdown = () => dispatch => {
   clearInterval(countdownInterval);
   let count = 4;

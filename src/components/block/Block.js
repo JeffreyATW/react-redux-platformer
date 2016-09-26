@@ -52,11 +52,11 @@ class Block extends Component {
 
   update() {
     const { angle } = this.state;
-    const { stageY, removeBlock } = this.props;
+    const { stageY, deleteBlock } = this.props;
 
     if (this.body) {
       if (this.body.position.y > stageY + STAGE_HEIGHT) {
-        removeBlock();
+        deleteBlock();
       } else {
         const fixedAngle = Number(angle.toFixed(4));
         const fixedBodyAngle = Number(this.body.angle.toFixed(4));

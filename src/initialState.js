@@ -1,5 +1,8 @@
+const highScore = window.localStorage.getItem('sixHighScore') || 0;
+
 export default {
   game: {
+    highScore,
     score: 0,
     over: false,
     started: false,

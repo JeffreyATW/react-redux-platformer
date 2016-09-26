@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Loop, Stage, World } from 'react-game-kit';
 import { STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
+import HighScoreContainer from '../highScore/HighScoreContainer';
 import ScoreContainer from '../score/ScoreContainer';
 import GameOverContainer from '../gameOver/GameOverContainer';
 import CountdownContainer from '../countdown/CountdownContainer';
@@ -33,6 +34,7 @@ class Game extends Component {
         <Loop>
           <Stage width={STAGE_WIDTH} height={STAGE_HEIGHT}>
             <StageSetterContainer />
+            <HighScoreContainer />
             <div className="ui">
               <button className="restart" onClick={restart}>Restart</button>
               <ScoreContainer />

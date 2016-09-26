@@ -33,7 +33,7 @@ export default new Map([
       },
     });
   }],
-  [actionTypes.REMOVE_BLOCK, (state, action) => update(state, {
+  [actionTypes.DELETE_BLOCK, (state, action) => update(state, {
     entities: {
       blocks: {
         [action.id]: {

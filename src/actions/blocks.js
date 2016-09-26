@@ -1,4 +1,5 @@
 import actionTypes from '../actionTypes';
+import { score } from './game.js';
 
 export const addBlocks = (blocks, rows) => ({
   type: actionTypes.ADD_BLOCKS,
@@ -6,8 +7,12 @@ export const addBlocks = (blocks, rows) => ({
   rows,
 });
 
-export const removeBlock = (id, points) => ({
-  type: actionTypes.REMOVE_BLOCK,
+export const deleteBlock = (id) => ({
+  type: actionTypes.DELETE_BLOCK,
   id,
-  points,
 });
+
+export const removeBlock = id => dispatch => {
+  dispatch(score(5));
+  dispatch(deleteBlock(id));
+};
