@@ -1,4 +1,5 @@
 import update from 'react-addons-update';
+import initialState from '../initialState';
 import actionTypes from '../actionTypes';
 
 export default new Map([
@@ -28,6 +29,11 @@ export default new Map([
   [actionTypes.SET_COUNTDOWN, (state, action) => update(state, {
     countdown: {
       $set: action.count,
+    },
+  })],
+  [actionTypes.RESTART, state => update(initialState.game, {
+    highScore: {
+      $set: state.highScore,
     },
   })],
 ]);
