@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { STAGE_HEIGHT } from '../../constants';
 import PartContainer from '../part/PartContainer';
 import Matter from 'matter-js';

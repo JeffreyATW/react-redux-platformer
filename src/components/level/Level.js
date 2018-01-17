@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { BLOCK_DIMENSION, STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
 import BlockContainer from '../block/BlockContainer';
 import FloorContainer from '../floor/FloorContainer';
@@ -20,7 +21,7 @@ class Level extends Component {
     [0,0,0,0,0],
 
     [0,0,1,1,2],
-    
+
     [0,0,1,2,2],
 
     [0,1,2,3,4],
