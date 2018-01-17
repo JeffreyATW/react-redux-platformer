@@ -1,4 +1,5 @@
-import update from 'react-addons-update';
+import update from 'immutability-helper';
+
 import actionTypes from '../actionTypes';
 
 export default new Map([

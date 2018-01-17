@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { Loop, Stage, World } from 'react-game-kit';
 import { STAGE_HEIGHT, STAGE_WIDTH } from '../../constants';
 import HighScoreContainer from '../highScore/HighScoreContainer';

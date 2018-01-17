@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from "prop-types";
 import { Body } from 'react-game-kit';
 
 class Character extends Component {
@@ -92,7 +93,7 @@ class Character extends Component {
       width: `${width}px`,
     };
   }
-  
+
   paint() {
     let background = this.background;
     if (this.props.background) {
